@@ -3,8 +3,15 @@ const express = require('express')
 const app = express()
 const port = 3333
 
+const SUBJECT = 'Mail from CodeRoad form!'
+
 app.get('/', (req, res) => {
-  res.send(req.query.message)
+  const { message, email } = req.query
+
+  if(!message) return res.status(400).send()
+  if(!email) return res.status(400).send()
+
+  res.send( email + ' ' + SUBJECT +  ' ' + message )
 })
 
 app.listen(port, () => {
