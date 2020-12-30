@@ -15,9 +15,11 @@ const transporter = nodemailer.createTransport({
   }
 })
 
+app.use('/', express.static('public'))
+
 const SUBJECT = 'Mail from CodeRoad form!'
 
-app.get('/', (req, res) => {
+app.get('/message', (req, res) => {
   const { message, email } = req.query
 
   if(!message) return res.status(400).send()
