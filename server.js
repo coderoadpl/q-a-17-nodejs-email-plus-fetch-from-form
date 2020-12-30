@@ -5,13 +5,13 @@ require('dotenv').config()
 const app = express()
 const port = 3333
 
-nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false, // upgrade later with STARTTLS
   auth: {
     user: "coderoadmailer@gmail.com",
-    pass: "password"
+    pass: process.env.SMTP_PASSWORD
   }
 })
 
@@ -23,7 +23,19 @@ app.get('/', (req, res) => {
   if(!message) return res.status(400).send()
   if(!email) return res.status(400).send()
 
-  res.send( email + ' ' + SUBJECT +  ' ' + message + ' ' + process.env.SMTP_PASSWORD )
+  transporter.sendMail(
+    {
+      from: "coderoadmailer@gmail.com",
+      to: email,
+      subject: SUBJECT,
+      text: message,
+    },
+    (err, info) => {
+      if(err) return res.status(500).send()
+      res.status(200).send(info)
+    }
+  )
+
 })
 
 app.listen(port, () => {
