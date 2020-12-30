@@ -12,11 +12,7 @@
 
 <body>
 
-  <form
-    action="message"
-    class="contact-form"
-    method="GET"
-  >
+  <form class="contact-form">
 
     <input
       type="email"
@@ -36,6 +32,33 @@
     </button>
 
   </form>
+
+  <script>
+    const button = document.querySelector('.contact-form__button')
+
+    const sendEmail = (e) => {
+      e.preventDefault()
+
+      const emailInput = document.querySelector('.contact-form__input--email')
+      const messageInput = document.querySelector('.contact-form__input--message')
+
+      const email = emailInput.value
+      const message = messageInput.value
+
+      console.log("EMAIL!", email, message)
+      fetch(`/message?message=${message}&email=${email}`)
+        .then((response) => {
+          if (response.status !== 200) throw new Error()
+          alert('Massage sent!')
+        })
+        .catch(() => alert('Something went wrong!'))
+    }
+
+    button.addEventListener(
+      'click',
+      sendEmail
+    )
+  </script>
 
 </body>
 
