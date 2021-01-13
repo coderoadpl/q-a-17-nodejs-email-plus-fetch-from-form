@@ -7,8 +7,8 @@ const port = 3333
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // upgrade later with STARTTLS
+  port: 465,
+  secure: true, // upgrade later with STARTTLS
   auth: {
     user: "coderoadmailer@gmail.com",
     pass: process.env.SMTP_PASSWORD
@@ -27,7 +27,7 @@ app.get('/message', (req, res) => {
 
   console.log('Starting to send message: ', message, email)
 
-  transporter.sendMail(
+  const response = transporter.sendMail(
     {
       from: "coderoadmailer@gmail.com",
       to: email,
@@ -40,6 +40,8 @@ app.get('/message', (req, res) => {
       res.status(200).send(info)
     }
   )
+
+  console.log(response)
 
 })
 
