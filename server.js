@@ -25,6 +25,8 @@ app.get('/message', (req, res) => {
   if(!message) return res.status(400).send()
   if(!email) return res.status(400).send()
 
+  console.log('Starting to send message: ', message, email)
+
   transporter.sendMail(
     {
       from: "coderoadmailer@gmail.com",
@@ -33,6 +35,7 @@ app.get('/message', (req, res) => {
       text: message,
     },
     (err, info) => {
+      console.log('Message sent callback: ', err, info)
       if(err) return res.status(500).send()
       res.status(200).send(info)
     }
