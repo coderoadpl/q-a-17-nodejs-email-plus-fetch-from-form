@@ -6,11 +6,11 @@ const app = express()
 const port = 3333
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // upgrade later with STARTTLS
+  host: "smtp.emaillabs.net.pl",
+  port: 587,
+  secure: false, // upgrade later with STARTTLS
   auth: {
-    user: "coderoadmailer@gmail.com",
+    user: "1.amazingdesign.smtp",
     pass: process.env.SMTP_PASSWORD
   }
 })
